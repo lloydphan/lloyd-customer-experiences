@@ -19,6 +19,8 @@ function customer_exp_post_thumbnails() {
 }
 add_action( 'after_setup_theme', 'customer_exp_post_thumbnails' );
 
+add_action('init', 'cus_exp_setup');
+
 function limit_words($phrase, $len) {
     $len = (int) $len;
     if (str_word_count($phrase) > $len) {

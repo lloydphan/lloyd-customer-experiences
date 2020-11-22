@@ -21,9 +21,12 @@ get_header();
 
             <!-- Loop Post -->
             <?php
+                $category = get_category( get_query_var( 'cat' ) );
+                $cat_id = $category->cat_ID;
                 $post_args = array(
                     'post_type'         => 'post',
-                    'posts_per_page'    => 10
+                    'posts_per_page'    => 10,
+                    'cat'          => $cat_id
                 ); 
                 $home_query = new WP_Query( $post_args );
                 if($home_query->have_posts()):
@@ -31,7 +34,7 @@ get_header();
             <?php
                  while($home_query->have_posts()):
                     $home_query->the_post();
-                    get_template_part( 'partials/content', 'excerpt' );
+                    get_template_part( 'partials/content', 'cat' );
                  endwhile;       
             ?>
 
