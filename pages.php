@@ -3,11 +3,11 @@
 get_header(); 
 ?>
 <?php 
-    $cat_args = array(
+    $args = array(
         'orderby' => 'name',
         'order'   => 'ASC'
     );
-    $categories = get_categories($cat_args);
+    $categories = get_categories($args);
 ?>
 <div class="container cus-exp-header">
     <div class="row">
@@ -20,27 +20,22 @@ get_header();
             </h1>
 
             <!-- Loop Post -->
-            <?php
-                $post_args = array(
-                    'post_type'         => 'post',
-                    'posts_per_page'    => 10
-                ); 
-                $home_query = new WP_Query( $post_args );
-                if($home_query->have_posts()):
-            ?>
-            <?php
-                 while($home_query->have_posts()):
-                    $home_query->the_post();
-                    get_template_part( 'partials/content', 'excerpt' );
-                 endwhile;       
-            ?>
+            <?php 
+                if(!is_single()):
+                    get_template_part( 'template-parts/content', 'page' );
+                else:
+                    get_template_part( 'template-parts/content', 'single' );
+                endif;
+			?>
 
 			<!-- Pagination -->
             <ul class="pagination justify-content-center mb-4">
-                <?php
-                    the_posts_pagination();
-                    endif;
-                ?>
+                <li class="page-item">
+                    <a class="page-link" href="#">← Older</a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Newer →</a>
+                </li>
             </ul>
 		</div>
 		
@@ -87,8 +82,19 @@ get_header();
             </div>
 
         </div>
-    </div>
-</div>
+
+	<?php
+	// while ( have_posts() ) : the_post();
+
+	// 	get_template_part( 'template-parts/content', 'page' );
+
+	// 	// If comments are open or we have at least one comment, load up the comment template.
+	// 	if ( comments_open() || get_comments_number() ) :
+	// 		comments_template();
+	// 	endif;
+
+	// endwhile; 
+	?>
 
 <?php
 get_footer();

@@ -1,7 +1,20 @@
 /*
-Theme Name: Customer Experiences Quynh
+Theme Name: Customer Experiences
 Author: Lloyd Phan
 Description: 
 Version: 0.0.1
 Tags: customer experience
 */
+
+.cus-exp-header {
+    margin-top: 3rem;
+}
+
+.my-4 small {
+    font-size: 70%;
+    font-weight: 200;
+}
+
+.cus-exp-card-title {
+    font-size: 1.2rem;
+}
