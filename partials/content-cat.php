@@ -1,6 +1,10 @@
+<?php
+    $category = get_category( get_query_var( 'cat' ) );
+    $cat_id = $category->cat_ID;
+?>
 <div class="card mb-4">
-    <div class="card-header">
-        Chuyên mục :
+    <div class="card-header bg-dark text-white">
+        Chuyên mục : <?php echo get_cat_name($cat_id); ?>
     </div>
     <a href="<?php the_permalink(); ?>">
         <?php
@@ -20,7 +24,7 @@
         <p class='card-text'><?php the_excerpt(); ?></p>
         <a href="<?php the_permalink() ?>" class="btn bg-dark btn-primary">Đọc thêm → </a>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer bg-dark text-white">
         Đăng lúc <?php post_relative_time(); ?> by <?php the_author() ?>
     </div>
 </div>
