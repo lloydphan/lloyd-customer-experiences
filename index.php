@@ -21,9 +21,10 @@ get_header();
 
             <!-- Loop Post -->
             <?php
+                $default_posts_per_page = get_option( 'posts_per_page' );
                 $post_args = array(
                     'post_type'         => 'post',
-                    'posts_per_page'    => 10
+                    'posts_per_page'    => $default_posts_per_page
                 ); 
                 $home_query = new WP_Query( $post_args );
                 if($home_query->have_posts()):
@@ -34,13 +35,18 @@ get_header();
                     get_template_part( 'partials/content', 'excerpt' );
                  endwhile;       
             ?>
-
-			<!-- Pagination -->
             <ul class="pagination justify-content-center mb-4">
-                <?php
-                    //the_posts_pagination();
+                <li class="page-item">
+                    <?php
+                        previous_posts_link( __('Bài mới','cus_exp'));
+                    ?>
+                </li>
+                <li class="page-item">
+                    <?php
+                        next_posts_link( __('Bài cũ','cus_exp'));
                     endif;
-                ?>
+                    ?>
+                </li>
             </ul>
 		</div>
 		
@@ -79,12 +85,9 @@ get_header();
             </div>
 
             <!-- Side Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
-                <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-                </div>
-            </div>
+            <?php if ( is_active_sidebar( 'right-side-widge-content' ) ) : ?>
+                <?php dynamic_sidebar( 'right-side-widge-content' ); ?>
+            <?php endif; ?>
 
         </div>
     </div>

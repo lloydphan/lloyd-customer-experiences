@@ -18,8 +18,9 @@ if(!function_exists('cus_exp_setup')) {
         add_theme_support('automatic-feed-limk');
 
         // Images Size
+        add_image_size('cus-exp-logo-size', 48, '', true);
         add_image_size('grid_post_thumbnail', 317, 216, true);
-        add_image_size('list_post_thumbnail', 728, 300, true);
+        add_image_size('list_post_thumbnail', 728, '', true);
         add_image_size('single_post_thumbnail', 800, 430, true);
         add_image_size('list_mini_thumbnail', 80, 80, true);
         add_image_size('author_thumbnail', 82, 82, true);

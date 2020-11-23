@@ -8,10 +8,28 @@ define('THEME_PATH', get_theme_file_path());
 include(get_theme_file_path().'/inc/setup.php');
 include(get_theme_file_path().'/inc/pagination.php');
 
+// Change get custom logo
+add_filter('get_custom_logo', 'change_logo_class');
+
+if(!function_exists('change_logo_class')) {
+    function change_logo_class($html) {
+        $html = str_replace('custom-logo-link', 'navbar-brand', $html);
+        $html = str_replace( 'custom-logo', 'size-cus-exp-logo-size', $html );
+        return $html;
+    }
+}
+
+// Paginator UI
+add_filter('next_posts_link_attributes', 'posts_link_attributes');
+add_filter('previous_posts_link_attributes', 'posts_link_attributes');
 
 if (version_compare($GLOBALS['wp_version'], '4.7-alpha', '<')) {
     require get_template_directory() . '/inc/back-compat.php';
     return;
+}
+
+function posts_link_attributes() {
+    return 'class="page-link"';
 }
 
 function customer_exp_post_thumbnails() {
@@ -85,6 +103,17 @@ add_theme_support('custom-logo', array(
     'header-text' => array('site-title', 'site-description'),
 ));
 
+register_sidebar(array(
+    'name' => 'Right side widget content',
+    'id' => 'right-side-widge-content',
+    'description' => 'Khu vực hiển thị side bar bên phải',
+    'before_widget' => '<div id="%1$s" class="card my-4">',
+    'after_widget'  => '</div>',
+    // 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+    // 'after_widget' => '</aside>',
+    'before_title' => '<h5 class="card-header">',
+    'after_title' => '</h5>'
+));
 
 
 /**

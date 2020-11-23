@@ -18,3 +18,8 @@ Tags: customer experience
 .cus-exp-card-title {
     font-size: 1.2rem;
 }
+
+.size-cus-exp-logo-size {
+    width: 48px;
+    height: auto;
+}

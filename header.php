@@ -24,12 +24,9 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark fixed-top">
             <div class="container">
-                <?php
-                $custom_logo_id = get_theme_mod('custom_logo');
-                $logo = wp_get_attachment_image_src($custom_logo_id, 'full'); ?>
-                <h4><?php echo $logo ?></h4>
-                <a class="navbar-brand" href="#"><?php the_custom_logo(); ?></a>
-                <a class="navbar-description text-white" href="#">Tui dang test lung tung</a>
+                <?php echo get_custom_logo(); ?>
+                <!-- <a class="navbar-brand" href="#"><img src="//" height="42" width="42"></a> -->
+                <!-- <a class="navbar-description text-white" href="#">Tui dang test lung tung</a> -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
