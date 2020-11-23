@@ -3,6 +3,7 @@
 get_header(); 
 ?>
 <?php 
+    $url =  home_url($wp->request);
     $cat_args = array(
         'orderby' => 'name',
         'order'   => 'ASC'
@@ -61,12 +62,14 @@ get_header();
             <div class="card my-4">
                 <h5 class="card-header text-white bg-dark">Tìm kiếm</h5>
                 <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                        <span class="input-group-append">
-                            <button class="btn btn-primary" type="button">Go!</button>
-                        </span>
-                    </div>
+                    <form role="search" method="get" id="searchform" class="searchform" action="<?php $url =  home_url($wp->request); ?>">
+                        <div class="input-group">
+                            <input id="s" type="text" name="s" class="form-control" placeholder="Tìm kiếm...">
+                            <span class="input-group-append">
+                                <input id="searchSubmit" class="btn btn-primary" type="submit" value="Tìm">
+                            </span>
+                        </div>
+                    </form>
                 </div>
             </div>
 
