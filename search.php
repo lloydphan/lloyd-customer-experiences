@@ -58,7 +58,7 @@ get_header();
 
             <!-- Search Widget -->
             <div class="card my-4">
-                <h5 class="card-header text-white bg-dark">Tìm kiếm</h5>
+                <h6 class="card-header text-white bg-dark">Tìm kiếm</h6>
                 <div class="card-body">
                     <form role="search" method="get" id="searchform" class="searchform" action="<?php echo $url; ?>">
                         <div class="input-group">
@@ -73,7 +73,7 @@ get_header();
 
             <!-- Categories Widget -->
             <div class="card my-4">
-                <h5 class="card-header text-white bg-dark">Thư mục</h5>
+                <h6 class="card-header text-white bg-dark">Thư mục</h6>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
