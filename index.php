@@ -62,7 +62,7 @@ get_header();
                         <div class="input-group">
                             <input id="s" type="text" name="s" class="form-control" placeholder="Tìm kiếm...">
                             <span class="input-group-append">
-                                <input id="searchSubmit" class="btn btn-primary" type="submit" value="Tìm">
+                                <input id="searchSubmit" class="btn btn-primary bg-dark" type="submit" value="Tìm">
                             </span>
                         </div>
                     </form>

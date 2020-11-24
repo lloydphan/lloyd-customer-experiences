@@ -1,122 +1,88 @@
 <?php
-/**
- * Custom template tags for this theme.
- *
- * @package WordPress
- * @subpackage Twenty_Twenty
- * @since 1.0.0
- */
+if ( !function_exists( 'shape_comment' ) ) :
 
-/**
- * Table of Contents:
- * Logo & Description
- * Comments
- * Post Meta
- * Menus
- * Classes
- * Archives
- * Miscellaneous
- */
+    /**
+     * Template for comments and pingbacks.
+     *
+     * Used as a callback by wp_list_comments() for displaying the comments.
+     *
+     * @since Shape 1.0
+     */
+    function shape_comment( $comment, $args, $depth ) {
+        $GLOBALS[ 'comment' ] = $comment;
+        switch ( $comment->comment_type ) :
+            // case 'pingback' :
+            case 'trackback' :
+                ?>
+                <div class="post pingback">
+                    <p><?php _e( 'Pingback:', 'shape' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __( '(Edit)', 'shape' ), ' ' ); ?></p>
+                </div>
+                    <?php
+                    break;
+                default :
+                    ?>
+                    <?php
+                    if ( $depth > 1 ) {
+                        echo '<div class="media d-block d-md-flex ml-5">';
+                    }
+                    ?>
+                <div class="media d-block d-md-flex mt-4" <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+                        <?php if($comment->user_id) { ?>
 
-/**
- * Logo & Description
- */
-/**
- * Displays the site logo, either text or image.
- *
- * @param array   $args Arguments for displaying the site logo either as an image or text.
- * @param boolean $echo Echo or return the HTML.
- *
- * @return string $html Compiled HTML based on our arguments.
- */
-function customer_exp_site_logo( $args = array(), $echo = true ) {
-	$logo       = get_header_image();
-	$site_title = get_bloginfo( 'name' );
-	$contents   = '';
-	$classname  = '';
+                                    <?php echo get_avatar( $comment, null, $default, $alt, array( 'class' => array( 'd-flex', 'mb-3', 'mx-auto' ) ) ); ?>
 
-	$defaults = array(
-		'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',
-		'logo_class'  => 'site-logo',
-		'title'       => '<a href="%1$s">%2$s</a>',
-		'title_class' => 'site-title',
-		'home_wrap'   => '<h1 class="%1$s">%2$s</h1>',
-		'single_wrap' => '<div class="%1$s faux-heading">%2$s</div>',
-		'condition'   => ( is_front_page() || is_home() ) && ! is_page(),
-	);
+                        <?php } else { ?>
+                            <span>
+                                    <?php echo get_avatar( $comment, 100 ); ?>
+                            </span>
+                        <?php } ?>
+                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                <h5 class="mt-0 font-weight-bold">
+                            <?php if($comment->user_id) { ?>
 
-	$args = wp_parse_args( $args, $defaults );
+                                <a href="<?php echo get_home_url().'/profile/?id='.$comment->user_id ?>" class="user"><?php printf( __( '%s', 'shape' ), sprintf( '<cite data-toggle="tooltip" data-placement="top" title="View profile" class="fn">%s</cite>', get_comment_author_link() ) ); ?></a>
+                            <?php } else { ?>
+                                <a class="user"><?php printf( __( '%s', 'shape' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?></a>
+                            <?php } ?>
 
-	/**
-	 * Filters the arguments for `twentytwenty_site_logo()`.
-	 *
-	 * @param array  $args     Parsed arguments.
-	 * @param array  $defaults Function's default arguments.
-	 */
-	$args = apply_filters( 'customer_exp_site_logo_args', $args, $defaults );
+                                   <?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ], 'add_below' => 'li-comment', 'reply_text' => '<i class="fa fa-reply pull-right"></i>' ) ), $comment_id ); ?>
 
-	if ( has_custom_logo() ) {
-		$contents  = sprintf( $args['logo'], $logo, esc_html( $site_title ) );
-		$classname = $args['logo_class'];
-	} else {
-		$contents  = sprintf( $args['title'], esc_url( get_home_url( null, '/' ) ), esc_html( $site_title ) );
-		$classname = $args['title_class'];
-	}
+                            </h5>
+                            <h7>
+                            <i class="fa fa-clock-o"></i> <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><time pubdate datetime="<?php comment_time( 'c' ); ?>">
+                                <?php
+                                /* translators: 1: date, 2: time */
+                                printf( __( '%1$s', 'shape' ), get_comment_date(), get_comment_time() );
+                                ?>
+                            </time></a>                             <?php edit_comment_link( __( '(Edit)', 'shape' ), ' ' ); ?>
+                            </h7>
+                            <?php if ( $comment->comment_approved == '0' ) : ?>
+                                <em><?php _e( 'Your comment is awaiting moderation.', 'shape' ); ?></em>
+                                <br />
+                            <?php endif; ?>
+                            <p><?php echo get_comment_text(); ?></p>
+                                <?php
+                                if($comment->comment_parent == 0){
+                                    $comment_id = $comment->comment_ID;
+                                }else {
+                                    $comment_id = $comment->comment_parent;
+                                }
+                                ?>
 
-	$wrap = $args['condition'] ? 'home_wrap' : 'single_wrap';
+                </div>
+                </div>
 
-	$html = sprintf( $args[ $wrap ], $classname, $contents );
+                <?php
+                if ( $depth > 1 ) {
+                    echo '</div>';
+                }
+                ?>
 
-	/**
-	 * Filters the arguments for `twentytwenty_site_logo()`.
-	 *
-	 * @param string $html      Compiled html based on our arguments.
-	 * @param array  $args      Parsed arguments.
-	 * @param string $classname Class name based on current view, home or single.
-	 * @param string $contents  HTML for site title or logo.
-	 */
-	$html = apply_filters( 'customer_exp_site_logo', $html, $args, $classname, $contents );
 
-	if ( ! $echo ) {
-		return $html;
-	}
+                <?php
+                break;
+        endswitch;
+    }
 
-	echo $html; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-}
-
-/**
- * Displays the site description.
- *
- * @param boolean $echo Echo or return the html.
- *
- * @return string $html The HTML to display.
- */
-function customer_exp_site_description( $echo = true ) {
-	$description = get_bloginfo( 'description' );
-
-	if ( ! $description ) {
-		return;
-	}
-
-	$wrapper = '<div class="site-description">%s</div><!-- .site-description -->';
-
-	$html = sprintf( $wrapper, esc_html( $description ) );
-
-	/**
-	 * Filters the html for the site description.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $html         The HTML to display.
-	 * @param string $description  Site description via `bloginfo()`.
-	 * @param string $wrapper      The format used in case you want to reuse it in a `sprintf()`.
-	 */
-	$html = apply_filters( 'customer_exp_site_description', $html, $description, $wrapper );
-
-	if ( ! $echo ) {
-		return $html;
-	}
-
-	echo $html; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
+endif; // ends check for shape_comment()
+?>

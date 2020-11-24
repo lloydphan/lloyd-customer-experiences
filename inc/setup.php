@@ -28,4 +28,8 @@ if(!function_exists('cus_exp_setup')) {
     };
 
 }
+
+if(is_single() && comments_open() && get_option('thread_comments')) {
+    wp_enqueue_script('comment-reply');
+}
 ?>

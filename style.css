@@ -23,3 +23,28 @@ Tags: customer experience
     width: 48px;
     height: auto;
 }
+    
+ul.children {
+    margin-left: 5px;
+}
+
+.comment-padding {
+    margin-top: 5px;
+}
+
+.comment-respond {
+    margin-top: 10px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25 rem;
+    padding: 1 rem;
+}
+
+#reply-title {
+    font-size: 1.5rem;
+}
+
+#comment {
+    width: 95%;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25 rem;
+}

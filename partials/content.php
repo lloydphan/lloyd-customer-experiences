@@ -2,6 +2,7 @@
     $category = get_the_category(get_the_ID());
     $cat_id = $category[0]->cat_ID;
 ?>
+
 <div class="card mb-4">
     <div class="card-header bg-dark text-white">
         Trong chuyên mục : <?php echo get_cat_name($cat_id) !== '' ? get_cat_name($cat_id) : '' ; ?>
@@ -25,3 +26,9 @@
         Đăng lúc <?php post_relative_time(); ?> by <?php the_author() ?>
     </div>
 </div>
+
+<?php 
+    if(comments_open() || get_comments_number()) {
+        comments_template();
+    }
+?>
